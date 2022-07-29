@@ -50,7 +50,7 @@ for x in range(1,100):
 
 #make a dataframe with our reviewList and put it in an excel file
 df = pd.DataFrame(reviewList)
-writer = pd.ExcelWriter('amazonScraper.xlsx')
+writer = pd.ExcelWriter('amazonScraper1.xlsx')
 df.to_excel(writer, sheet_name = 'sheet1',index=False)
 
 #for adjusting the width of the excel columns so that all the content can be seen
@@ -63,3 +63,10 @@ for column in df:
     writer.sheets['sheet1'].set_column(col_idx, col_idx, column_width)
 
 writer.save()
+
+#count the number of occurances of each rating
+occurances = df.groupby(['rating'])['rating'].count()
+
+#iterate through the series and print out the results
+for rating, num in occurances.items():
+    print(f"Rating: {rating}  Occurances: {num}")
